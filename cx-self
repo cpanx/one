@@ -1,0 +1,148 @@
+# CX-LazyConf,圈X配置
+# 本配置中的规则部分以奇心3.0规则为主，其它内容完全来自于整合各位大佬的资源，本人小白，纯属学习，方便自娱自用，绝不商用，如有侵权，请联系删除
+# Telegram：https://t.me/
+# “;” “#”为注释符号，去掉前面的符号，该行才会生效
+# 使用本配置，先备份自己之前的配置，否则会覆盖
+# Update:2022.10.25
+# ----------------------
+# 建议添加以下数据库
+# https://github.com/Hackl0us/GeoIP2-CN/raw/release/Country.mmdb
+# 使用方法：打开QuantumultX - 风车 - 其他设置 - GeoLite2 - 来源 ，然后把上面链接输进去，默认7天更新就可以了。
+# ----------------------
+[general]
+# 下列表中内容将不经过 QuantumultX 的处理
+excluded_routes=192.168.0.0/16, 10.0.0.0/8, 172.16.0.0/12, 100.64.0.0/10, 17.0.0.0/8
+# 代理延迟测速 URL 
+# 对指定的网址进行相应测试，以确认节点的可用性
+network_check_url=http://cp.cloudflare.com/generate_204
+server_check_url=http://www.qualcomm.cn/generate_204
+# geo_location_checker
+# 用于在应用主界面左上角显示服务器的 GEO 相关信息显示，如果不需要可以设置为 disabled，可完整自定义
+# geo_location_checker=http://ip-api.com/json/?lang=zh-CN, https://github.com/KOP-XIAO/QuantumultX/raw/master/Scripts/IP_API.js
+geo_location_checker=disabled
+# 资源解析器
+resource_parser_url= https://raw.githubusercontent.com/KOP-XIAO/QuantumultX/master/Scripts/resource-parser.js
+# dns_exclusion_list
+# list中的域名将不使用fake-ip方式, 多个域名用“, ”连接。其它域名则全部采用 fake-ip及远程解析的模式
+dns_exclusion_list = *.cmpassport.com, *.jegotrip.com.cn, *.icitymobile.mobi, id6.me, *.icitymobile.mobi, *.pingan.com.cn, *.cmbchina.com, *.localnetwork.uop, mfs.ykimg.com*.ttf
+# ----------------------
+[dns]
+no-ipv6
+# DoH服务器(DNS over HTTPS)以加密的HTTPS协议进行DNS解析请求，避免原始DNS协议中用户的DNS解析请求被窃听或者修改的问题（例如中间人攻击）来达到保护用户隐私的目的
+# 设置DoH服务器后，所有其他常规DNS服务器设置将被忽略；当设置了多个DoH服务器时，只会使用第一个；当使用的 DoH服务器不是基于HTTP/2时，DoH将被暂时禁用。
+# 阿里 DoH
+doh-server=https://dns.alidns.com/dns-query
+# 同时使用多个DoH服务器(Tf功能
+# DNS.SB,阿里,红鱼,IIJ
+# doh-server=https://doh.dns.sb/dns-query, https://dns.alidns.com/dns-query, https://rubyfish.cn/dns-query, https://public.dns.iij.jp/dns-query
+# 常规DNS服务器
+# 腾讯云DNSPod DNS
+server=119.29.29.29
+# 阿里 AliDNS
+server=223.5.5.5
+# 制定域名解析 dns
+server=1.2.4.8
+server=/*.taobao.com/223.5.5.5
+server=/*.tmall.com/223.5.5.5
+server=/*.alipay.com/223.5.5.5
+server=/*.alicdn.com/223.5.5.5
+server=/*.aliyun.com/223.5.5.5
+server=/*.jd.com/119.28.28.28
+server=/*.qq.com/119.28.28.28
+server=/*.tencent.com/119.28.28.28
+server=/*.weixin.com/119.28.28.28
+server=/*.bilibili.com/119.29.29.29
+server=/hdslb.com/119.29.29.29
+server=/*.163.com/119.29.29.29
+server=/*.126.com/119.29.29.29
+server=/*.126.net/119.29.29.29
+server=/*.127.net/119.29.29.29
+server=/*.netease.com/119.29.29.29
+server=/*.mi.com/119.29.29.29
+server=/*.xiaomi.com/119.29.29.29
+address=/mtalk.google.com/108.177.125.188
+# ----------------------
+[policy]
+## 策略组
+## 将分流规则传递过来的网络请求进行分发
+# 其中港台番剧策略组对应的分流规则默认处于关闭状态，如需使用请在 分流-引用 中开启
+# 优选节点中的“server-tag-regex=”的名称，应该和“server_remote”给订阅设置的名称一致，表示优选节点是从所有节点中选择延迟最低的一个
+url-latency-benchmark=优选节点, server-tag-regex=CX, check-interval=1200, tolerance=0, img-url=https://raw.githubusercontent.com/cpanx/icon/master/Universal/Auto_Speed.png
+static=自选节点, 优选节点, proxy, img-url=https://raw.githubusercontent.com/cpanx/icon/master/Universal/Select.png
+static=海外服务, 自选节点, img-url=https://raw.githubusercontent.com/cpanx/icon/master/Universal/Final.png
+static=地理位置, 大陆服务, 自选节点, img-url=https://raw.githubusercontent.com/cpanx/icon/master/Universal/Map.png
+static=大陆服务, direct, 自选节点, img-url=https://raw.githubusercontent.com/cpanx/icon/master/Universal/Microsoft.png
+static=广告屏蔽, reject, img-url=https://raw.githubusercontent.com/cpanx/icon/master/Universal/Reject.orig.png
+static=港台番剧, 大陆服务, 自选节点, img-url=https://raw.githubusercontent.com/cpanx/icon/master/Universal/Netflix.png
+#如果需要分地区节点使用，去掉下面相关地区前面的 # 即可
+#url-latency-benchmark=香港, server-tag-regex=(?=.*(港|HK|(?i)Hong))^((?!(台|日|韩|新|美)).)*$, check-interval=600, tolerance=0, img-url=https://qxnav.com/rules/QuantumultX/img/HK.png
+#url-latency-benchmark=台湾, server-tag-regex=(?=.*(台|TW|(?i)Taiwan))^((?!(港|日|韩|新|美)).)*$, check-interval=600, tolerance=0, img-url=https://qxnav.com/rules/QuantumultX/img/TW.png
+#url-latency-benchmark=日本, server-tag-regex=(?=.*(日|JP|(?i)Japan))^((?!(港|台|韩|新|美)).)*$, check-interval=600, tolerance=0, img-url=https://qxnav.com/rules/QuantumultX/img/JP.png
+#url-latency-benchmark=美国, server-tag-regex=(?=.*(美|US|(?i)States|American))^((?!(港|台|日|韩|新)).)*$, check-interval=600, tolerance=0, img-url=https://qxnav.com/rules/QuantumultX/img/US.png
+# ----------------------
+[server_local]
+# 本地服务器节点
+# 自行添加即可
+# ----------------------
+[server_remote]
+# 节点远程订阅，自行添加，去掉下方的#，并替换https的网址
+https://****, tag=CX, img-url=https://raw.githubusercontent.com/cpanx/icon/master/Google_Suite/Photos.png, update-interval=86400, opt-parser=true, enabled=true
+# ----------------------
+[filter_remote]
+## 远程分流规则订阅
+## 将网络请求进行分流，网络请求的走向(是否能成功访问)由匹配到的策略组决定
+# 部分规则有先后顺序要求，调整顺序可能失效
+https://raw.githubusercontent.com/cpanx/one/main/overseas.list, tag=海外服务, update-interval=172800, opt-parser=false, enabled=true
+https://raw.githubusercontent.com/cpanx/one/main/mainland.list, tag=大陆服务, update-interval=172800, opt-parser=false, enabled=true
+https://raw.githubusercontent.com/cpanx/one/main/location.list, tag=地理位置, update-interval=172800, opt-parser=false, enabled=true
+https://raw.githubusercontent.com/cpanx/one/main/advertising.list, tag=广告屏蔽, update-interval=86400, opt-parser=false, enabled=true
+https://raw.githubusercontent.com/cpanx/one/main/hk-tw.list, tag=港台番剧, update-interval=86400, opt-parser=false, enabled=true
+# ----------------------
+[filter_local]
+# 本地分流规则(相同规则下，本地规则将覆盖远程规则，优先生效)
+# 其他
+host-suffix, local, direct
+ip-cidr, 10.0.0.0/8, direct
+ip-cidr, 17.0.0.0/8, direct
+ip-cidr, 100.64.0.0/10, direct
+ip-cidr, 127.0.0.0/8, direct
+ip-cidr, 172.16.0.0/12, direct
+ip-cidr, 192.168.0.0/16, direct
+# geoip的规则是说大陆内容按照“大陆策略”执行
+geoip, cn, 大陆服务
+# final是对以上所有规则的兜底，除了已有规则的网络活动，则按照“大陆服务”策略执行，也可以写“direct”，相当于不用代理
+final, 大陆服务
+# ----------------------
+[rewrite_remote]
+# 远程重写订阅
+# 包含主机名 hostname 以及复写 rewrite 规则
+# update-interval 为更新时间参数，单位：秒, 默认更新时间为：24*60*60=86400 秒，也就是24小时
+# opt-parser=true/false 用于控制是否对订阅开启资源解析器，不写或者 false 表示不启用解析器
+https://raw.githubusercontent.com/VirgilClyne/iRingo/main/qxrewrite/Siri.qxrewrite?raw=true, tag= iRingo for Siri & Search, update-interval=172800, opt-parser=false, enabled=true
+https://raw.githubusercontent.com/89996462/Quantumult-X/main/ycdz/keep.js, tag=keep, update-interval=172800, opt-parser=true, enabled=true
+https://raw.githubusercontent.com/app2smile/rules/master/module/spotify.conf, tag=Spotify, update-interval=172800, opt-parser=false, enabled=true
+https://raw.githubusercontent.com/Peng-YM/Sub-Store/master/config/QX.snippet, tag=sub-store, update-interval=172800, opt-parser=false, enabled=true
+https://raw.githubusercontent.com/limbopro/Profiles4limbo/main/QuantumultX/Google_rewrite.conf, tag=Google搜索, update-interval=172800, opt-parser=false, enabled=true
+https://raw.githubusercontent.com/cpanx/one/main/tailadv.conf, tag=去开屏广告, update-interval=86400, opt-parser=true, enabled=true
+https://raw.githubusercontent.com/Neurogram-R/Quantumult-X/main/snippet/Dualsub.snippet, tag=Dualsub(Neurogram-R, update-interval=172800, opt-parser=false, enabled=true
+https://raw.githubusercontent.com/chavyleung/scripts/master/box/rewrite/boxjs.rewrite.quanx.conf, tag=BoxJS, update-interval=86400, opt-parser=false, enabled=true
+# ----------------------
+[rewrite_local]
+# 本地重写
+# Sub-Store
+^https?:\/\/sub\.store url script-analyze-echo-response https://raw.githubusercontent.com/Peng-YM/Sub-Store/master/backend/sub-store.min.js
+# ----------------------
+[task_local]
+#Task远程订阅 
+#添加方法：打开构造请求，最上方第一个按钮，右上角+号添加即可
+event-interaction https://raw.githubusercontent.com/KOP-XIAO/QuantumultX/master/Scripts/geo_location.js, tag=GeoIP 查询, img-url=location.fill.viewfinder.system, enabled=true
+event-interaction https://raw.githubusercontent.com/KOP-XIAO/QuantumultX/master/Scripts/streaming-ui-check.js, tag=流媒体-解锁查询, img-url=checkmark.seal.system, enabled=true
+event-interaction https://raw.githubusercontent.com/KOP-XIAO/QuantumultX/master/Scripts/nf_ytb_ui-check.js, tag=YouTube/Netflix 解锁查询, img-url=checkmark.seal.system, enabled=true
+# ----------------------
+[mitm]
+# 开启 mitm，需要自行在Quantumult X中生成证书、安装、信任
+# 以下为证书&主机名部分
+skip_validating_cert = false
+force_sni_domain_name = false
+hostname = sub.store, *.example.com, *.sample.com
+simple_cert_hostname=sub.store
